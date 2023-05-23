@@ -1,0 +1,19 @@
+name: desktop_split_pane
+description: A Split Pane implementation for flutter desktop and web.
+version: 1.0.0
+homepage: https://github.com/omegaui/desktop_split_pane
+
+environment:
+  sdk: '>=3.0.1 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
