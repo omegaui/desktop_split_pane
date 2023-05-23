@@ -1,4 +1,5 @@
-![Screenshot from 2023-05-23 14-22-50](https://github.com/omegaui/desktop_split_pane/assets/73544069/f64eba88-8eee-4291-804a-d19af90bcd71)
+
+![preview](https://github.com/omegaui/desktop_split_pane/assets/73544069/0f19a69c-5ccd-4d06-b013-196f3a7bcf3f)
 
 # desktop_split_pane
 
