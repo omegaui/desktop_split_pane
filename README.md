@@ -22,9 +22,8 @@ flutter pub add desktop_split_pane
 ## Usage
 
 ```dart
+import 'package:desktop_split_pane/desktop_split_pane.dart';
 import 'package:flutter/material.dart';
-import 'package:spilt_pane/horizontal_split_pane.dart';
-import 'package:spilt_pane/vertical_split_pane.dart';
 
 void main() {
   runApp(const App());
@@ -39,44 +38,42 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: LayoutBuilder(
-          builder: (context, constraints) =>
-              HorizontalSplitPane(
+          builder: (context, constraints) => HorizontalSplitPane(
+            constraints: constraints,
+            separatorColor: Colors.black,
+            separatorThickness: 4.0,
+            fractions: [0.2, 0.2, 0.2, 0.4],
+            children: [
+              Container(
+                color: Colors.blue,
+              ),
+              Container(
+                color: Colors.pinkAccent,
+              ),
+              Container(
+                color: Colors.purpleAccent,
+              ),
+              VerticalSplitPane(
                 constraints: constraints,
-                separatorColor: Colors.black,
+                separatorColor: Colors.white,
                 separatorThickness: 4.0,
-                fractions: [0.2, 0.2, 0.2, 0.4],
                 children: [
                   Container(
-                    color: Colors.blue,
+                    color: Colors.grey,
                   ),
                   Container(
-                    color: Colors.pinkAccent,
+                    color: Colors.greenAccent,
                   ),
                   Container(
-                    color: Colors.purpleAccent,
-                  ),
-                  VerticalSplitPane(
-                    constraints: constraints,
-                    separatorColor: Colors.white,
-                    separatorThickness: 4.0,
-                    children: [
-                      Container(
-                        color: Colors.grey,
-                      ),
-                      Container(
-                        color: Colors.greenAccent,
-                      ),
-                      Container(
-                        color: Colors.teal,
-                      ),
-                    ],
+                    color: Colors.teal,
                   ),
                 ],
               ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
-
 ```
