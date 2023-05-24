@@ -12,6 +12,9 @@ A hot reload supported Split Pane widget for flutter desktop and web.
 - Auto resize on app window resize
 - Customize Separator Thickness and Color
 - States are public to support explicit widget rebuilds (just call `rebuild()` on state)
+- You can now remove and add widgets during runtime without needing a hot restart.
+- This property is very useful for showing side panes and hiding them later.
+- `onResize(widths/heights)` function added to listen to resize events.
 
 ## Getting started
 

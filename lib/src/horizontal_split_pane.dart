@@ -1,14 +1,16 @@
-import 'package:desktop_split_pane/src/child_holder.dart';
 import 'package:flutter/material.dart';
+
+import 'child_holder.dart';
 
 class HorizontalSplitPane extends StatefulWidget {
   HorizontalSplitPane({
     super.key,
-    required this.children,
     required this.constraints,
     this.fractions,
     required this.separatorColor,
     required this.separatorThickness,
+    required this.children,
+    this.onResize,
   });
 
   final List<Widget> children;
@@ -16,6 +18,11 @@ class HorizontalSplitPane extends StatefulWidget {
   final List<double>? fractions;
   final Color separatorColor;
   final double separatorThickness;
+
+  /// Called when widgets are resized or are just build again
+  ///
+  /// Parameter is the list of widths of each widget
+  final void Function(List<double>)? onResize;
 
   @override
   State<HorizontalSplitPane> createState() => HorizontalSplitPaneState();
@@ -25,12 +32,14 @@ class HorizontalSplitPaneState extends State<HorizontalSplitPane> {
   late HorizontalResizeController sizeController;
   List<double> widths = [];
   bool scheduled = false;
+  int previousBuildsChildrenLength = 0;
 
   void rebuild() {
     setState(() {});
   }
 
   void calculatePrefWidth() {
+    previousBuildsChildrenLength = widget.children.length;
     double numberOfSeparators = widget.children.length - 1;
     double maxWidth = widget.constraints.maxWidth -
         numberOfSeparators * widget.separatorThickness;
@@ -41,13 +50,29 @@ class HorizontalSplitPaneState extends State<HorizontalSplitPane> {
       }
       if (sum == 1.0) {
         widths = [];
-        for (var fraction in widget.fractions!) {
-          widths.add(fraction * maxWidth);
+        if (widget.fractions!.length == widget.children.length) {
+          for (var fraction in widget.fractions!) {
+            widths.add(fraction * maxWidth);
+          }
+        } else if (widget.fractions!.length > widget.children.length) {
+          for (var i = 0; i < widget.children.length; i++) {
+            widths.add(widget.fractions![i] * maxWidth);
+          }
+          var lastIndex = widget.children.length - 1;
+          var combinedFraction = widget.fractions![lastIndex];
+          widths[lastIndex] = widths[lastIndex] / combinedFraction;
+          for (var i = lastIndex + 1; i < widget.fractions!.length; i++) {
+            combinedFraction += widget.fractions![i];
+          }
+          widths[lastIndex] = widths[lastIndex] * combinedFraction;
         }
       }
     } else {
       widths = List<double>.filled(
           widget.children.length, maxWidth / widget.children.length);
+    }
+    if (widget.onResize != null) {
+      widget.onResize!(widths);
     }
   }
 
@@ -94,7 +119,7 @@ class HorizontalSplitPaneState extends State<HorizontalSplitPane> {
       return;
     }
     scheduled = true;
-    Future.delayed(Duration(milliseconds: 250), () {
+    Future.delayed(Duration(milliseconds: 125), () {
       scheduled = false;
       rebuild();
     });
@@ -102,10 +127,13 @@ class HorizontalSplitPaneState extends State<HorizontalSplitPane> {
 
   @override
   Widget build(BuildContext context) {
+    if (previousBuildsChildrenLength != widget.children.length) {
+      calculatePrefWidth();
+    }
     return NotificationListener(
       onNotification: (SizeChangedLayoutNotification notification) {
         calculatePrefWidth();
-        Future.delayed(Duration(milliseconds: 250), () => scheduleRebuild());
+        Future.delayed(Duration(milliseconds: 125), () => scheduleRebuild());
         return true;
       },
       child: SizeChangedLayoutNotifier(
