@@ -8,8 +8,7 @@ class ChildHolder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 100),
+    return SizedBox(
       width: size.width,
       height: size.height,
       child: child,

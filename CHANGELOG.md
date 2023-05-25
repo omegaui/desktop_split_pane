@@ -12,3 +12,8 @@
 - You can now remove and add widgets during runtime without needing a hot restart.
 - This property is very useful for showing side panes and hiding them later.
 - `onResize(widths/heights)` function added to listen to resize events.
+
+## 1.0.2
+
+- Optimized Performance
+- Removed Container Animations

@@ -86,21 +86,16 @@ class HorizontalSplitPaneState extends State<HorizontalSplitPane> {
     sizeController =
         HorizontalResizeController(constraints: widget.constraints);
     List<Widget> widgets = [];
-    var count = 0;
     var index = -1;
     for (var child in widget.children) {
-      count++;
       index++;
       widgets.add(ChildHolder(child: child));
-      if (count == 1) {
-        count = 0;
-        widgets.add(HorizontalSeparator(
-          index: index,
-          paneState: this,
-          separatorColor: widget.separatorColor,
-          separatorThickness: widget.separatorThickness,
-        ));
-      }
+      widgets.add(HorizontalSeparator(
+        index: index,
+        paneState: this,
+        separatorColor: widget.separatorColor,
+        separatorThickness: widget.separatorThickness,
+      ));
     }
     widgets.removeLast();
     List<ChildHolder> holders = [];

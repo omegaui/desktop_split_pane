@@ -85,21 +85,16 @@ class VerticalSplitPaneState extends State<VerticalSplitPane> {
   List<Widget> _build() {
     sizeController = VerticalResizeController(constraints: widget.constraints);
     List<Widget> widgets = [];
-    var count = 0;
     var index = -1;
     for (var child in widget.children) {
-      count++;
       index++;
       widgets.add(ChildHolder(child: child));
-      if (count == 1) {
-        count = 0;
-        widgets.add(VerticalSeparator(
-          index: index,
-          paneState: this,
-          separatorColor: widget.separatorColor,
-          separatorThickness: widget.separatorThickness,
-        ));
-      }
+      widgets.add(VerticalSeparator(
+        index: index,
+        paneState: this,
+        separatorColor: widget.separatorColor,
+        separatorThickness: widget.separatorThickness,
+      ));
     }
     widgets.removeLast();
     List<ChildHolder> holders = [];
