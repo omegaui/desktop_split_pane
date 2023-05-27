@@ -11,7 +11,10 @@ class HorizontalSplitPane extends StatefulWidget {
     required this.separatorThickness,
     required this.children,
     this.onResize,
-  });
+  }) {
+    children.removeWhere(
+        (element) => element is Offstage && (element as Offstage).offstage);
+  }
 
   final List<Widget> children;
   final BoxConstraints constraints;

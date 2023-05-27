@@ -17,3 +17,9 @@
 
 - Optimized Performance
 - Removed Container Animations
+
+## 1.0.3
+
+- Now, Supports Offstage widgets
+- This helps in getting the accessing the current State of the Widget without even rendering it
+- Useful for IDEs to show their tab panes when they have elements or else hide them as needed.
